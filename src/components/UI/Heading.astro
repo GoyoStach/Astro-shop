@@ -1,0 +1,35 @@
+---
+import { twMerge } from 'tailwind-merge'
+
+const sizeOptions = {
+  h1: 'text-5xl sm:text-6xl lg:text-7xl',
+  h2: 'text-4xl sm:text-5xl lg:text-6xl',
+  h3: 'text-3xl sm:text-4xl lg:text-5xl',
+  h4: 'text-2xl',
+  h5: 'text-xl',
+  h6: 'text-lg'
+} as const
+
+type Props = {
+  size: keyof typeof sizeOptions
+  bolded?: boolean
+  visible?: boolean
+  classes?: string
+}
+
+const { size, classes, visible = true, bolded = true, ...rest } = Astro.props
+
+const Tag = size
+
+const finalClasses = twMerge(
+  'font-Poppins',
+  sizeOptions[size],
+  bolded === true ? 'font-bold' : '',
+  visible === true ? '' : 'sr-only',
+  classes
+)
+---
+
+<Tag class={finalClasses} {...rest}>
+  <slot />
+</Tag>
