@@ -12,15 +12,10 @@ const { accessory } = Astro.props
 const { brand, name, photo, price } = accessory.data
 ---
 
-<!-- <Link
-    style={'ghost'}
-    href={name}
-    classes='grid sm:grid-cols-2 place-items-center sm:justify-between border rounded-2xl p-5'
-  > -->
 <article>
   <Link
-    classes='grid sm:grid-cols-2 place-items-center sm:justify-between border rounded-2xl p-5'
-    href='#'
+    classes='grid sm:grid-cols-2 place-items-center sm:justify-between border rounded-2xl m-5 hover:m-0 transition-all duration-300 p-2'
+    href={accessory.slug}
   >
     <div
       class='max-w-sm text-center sm:text-left grid gap-2 sm:gap-4 content-center place-items-center sm:place-items-start order-1 sm:order-none'

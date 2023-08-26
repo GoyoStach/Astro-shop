@@ -5,13 +5,11 @@ import Card from '../components/Card.astro'
 import { getCollection } from 'astro:content'
 import Heading from '../components/UI/Heading.astro'
 const allAccessories = await getCollection('accessories')
-
-console.log('rep', allAccessories)
 ---
 
 <Layout title='Welcome to Astro.'>
-  <main>
-    <Heading size='h1' classes='bg-blue-500'>This is Title</Heading>
+  <main class='p-5'>
+    <Heading size='h1' classes='text-center'>C'est pas des mensonges</Heading>
     <section class='container max-w-7xl mx-auto space-y-5 pt-5 px-5'>
       {allAccessories.map((accessory) => <Card accessory={accessory} />)}
     </section>
