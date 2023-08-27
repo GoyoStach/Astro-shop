@@ -1,0 +1,60 @@
+---
+//Maybe Rework Dynamic to do depending on the amount of cards.
+import { getCollection } from 'astro:content'
+import Heading from './Heading.astro'
+const categories = await getCollection('categories')
+---
+
+<section class='grid grid-cols-4 gap-4 max-w-7xl mx-auto'>
+  <article
+    class='bg-cover bg-no-repeat bg-center col-span-4 lg:col-span-2 2xl:col-span-1 h-[400px] justify-start items-end flex rounded-xl'
+    style={`background-image: url(${categories[0].data.hero.src})`}
+    transition:name={(categories[0].slug! + 'hero_transition').replace(
+      /\W/g,
+      ''
+    )}
+  >
+    <a href={categories[0].collection + '/' + categories[0].slug} class='flex'>
+      <div class='m-4 hover:p-2 transition-all'>
+        <Heading size='h3' classes='text-white'>
+          {categories[0].data.name}
+        </Heading>
+        <span class='text-white text-sm'>See products &#62;</span>
+      </div>
+    </a>
+  </article>
+  <article
+    class='bg-cover bg-no-repeat bg-center col-span-4 lg:col-span-2 2xl:col-span-1 h-[400px] justify-start items-end flex rounded-xl'
+    style={`background-image: url(${categories[2].data.hero.src})`}
+    transition:name={(categories[2].slug! + 'hero_transition').replace(
+      /\W/g,
+      ''
+    )}
+  >
+    <a href={categories[2].collection + '/' + categories[2].slug} class='flex'>
+      <div class='m-4 hover:p-2 transition-all'>
+        <Heading size='h3' classes='text-white'>
+          {categories[2].data.name}
+        </Heading>
+        <span class='text-white text-sm'>See products &#62;</span>
+      </div>
+    </a>
+  </article>
+  <article
+    class='bg-cover bg-no-repeat bg-left-top col-span-4 2xl:col-span-2 h-[400px] justify-start items-end flex rounded-xl'
+    style={`background-image: url(${categories[1].data.hero.src})`}
+    transition:name={(categories[1].slug! + 'hero_transition').replace(
+      /\W/g,
+      ''
+    )}
+  >
+    <a href={categories[1].collection + '/' + categories[1].slug} class='flex'>
+      <div class='m-4 hover:p-2 transition-all'>
+        <Heading size='h3' classes='text-white'>
+          {categories[1].data.name}
+        </Heading>
+        <span class='text-white text-sm'>See products &#62;</span>
+      </div>
+    </a>
+  </article>
+</section>

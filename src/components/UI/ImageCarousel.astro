@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+  imageArray: any[]
+}
+
+const { imageArray } = Astro.props
+---
+
+<div
+  class='flex max-w-[800px] margin-auto overflow-hidden overflow-x-scroll scrollbar-hide'
+>
+  {
+    imageArray.map((e, i) => (
+      <Image
+        src={e}
+        alt={`alt-photo-carousel-${i}`}
+        class='object-contain w-auto h-20'
+      />
+    ))
+  }
+</div>

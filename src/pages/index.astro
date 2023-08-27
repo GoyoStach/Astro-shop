@@ -1,17 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Card from '../components/Card.astro'
-
-import { getCollection } from 'astro:content'
-import Heading from '../components/UI/Heading.astro'
-const allAccessories = await getCollection('accessories')
+import CategoryCard from '../components/UI/CategoryCard.astro'
+import Hero from '../components/Hero.astro'
+import Header from '../components/Header.astro'
 ---
 
-<Layout title='Welcome to Astro.'>
-  <main class='p-5'>
-    <Heading size='h1' classes='text-center'>C'est pas des mensonges</Heading>
-    <section class='container max-w-7xl mx-auto space-y-5 pt-5 px-5'>
-      {allAccessories.map((accessory) => <Card accessory={accessory} />)}
-    </section>
+<Layout title={"C'est pas des mensonges"}>
+  <Header />
+  <main class='space-y-10 p-4 max-w-7xl mx-auto'>
+    <Hero />
+    <CategoryCard />
   </main>
 </Layout>

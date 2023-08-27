@@ -1,0 +1,23 @@
+---
+import Heading from './UI/Heading.astro'
+
+interface Props {
+  classList?: string
+}
+const { classList } = Astro.props
+---
+
+<header class={`sticky top-0 w-full backdrop-blur-md ${classList}  `}>
+  <nav
+    class='flex items-center gap-6 text-base justify-center max-w-7xl mx-auto'
+  >
+    <a href='/'>
+      <Heading
+        size='h2'
+        classes='font-semibold tracking-tighter p-2 text-lg text-expresso-200'
+      >
+        C'est pas des mensonges
+      </Heading>
+    </a>
+  </nav>
+</header>

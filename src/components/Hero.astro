@@ -1,0 +1,27 @@
+---
+import { getImage } from 'astro:assets'
+import Heading from './UI/Heading.astro'
+import Link from './UI/Link.astro'
+
+//Optimized Images
+import path_hero_src from '../assets/hero/default-hero.jpeg'
+const optimizedBackgroundHero = await getImage({
+  src: path_hero_src
+})
+---
+
+<section
+  class='bg-cover bg-no-repeat bg-center h-[30vh]'
+  style={`background-image: url(${optimizedBackgroundHero.src})`}
+>
+  <div
+    class='bg-gradient-to-b from-expresso-500 via-transparent to-expresso-500 bg-blend-multiply w-full h-full'
+  >
+    <div
+      class='bg-gradient-to-r from-expresso-500 via-transparent to-expresso-500 bg-blend-multiply w-full h-full justify-center items-center flex flex-col gap-y-4'
+    >
+      <Heading size='h2' classes='text-white'>Let's shop</Heading>
+      <Link href='#' classes='text-white' style='square'>Go !</Link>
+    </div>
+  </div>
+</section>

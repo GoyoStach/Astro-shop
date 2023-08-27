@@ -1,18 +1,20 @@
 ---
+//Unused
 import type { CollectionEntry } from 'astro:content'
 import Heading from './UI/Heading.astro'
 import Link from './UI/Link.astro'
 import { convertNumberToEur } from '../helpers/convertCurrencyToEuro'
 import { Image } from 'astro:assets'
 interface Props {
-  accessory: CollectionEntry<'accessories'>
+  accessory: CollectionEntry<'watch'>
+  sharedAnimationString?: string
 }
 
-const { accessory } = Astro.props
+const { accessory, sharedAnimationString } = Astro.props
 const { brand, name, photo, price } = accessory.data
 ---
 
-<article>
+<article transition:name={sharedAnimationString}>
   <Link
     classes='grid sm:grid-cols-2 place-items-center sm:justify-between border rounded-2xl m-5 hover:m-0 transition-all duration-300 p-2'
     href={accessory.slug}
@@ -20,7 +22,7 @@ const { brand, name, photo, price } = accessory.data
     <div
       class='max-w-sm text-center sm:text-left grid gap-2 sm:gap-4 content-center place-items-center sm:place-items-start order-1 sm:order-none'
     >
-      <Heading size={'h3'}>
+      <Heading size={'h3'} transition:name={name.replace(/\W/g, '')}>
         {name}
       </Heading>
       <p class='text-xl sm:text-2xl md:text-4xl'>
@@ -38,6 +40,7 @@ const { brand, name, photo, price } = accessory.data
       width={550}
       alt={`alt-photo-${name}`}
       class={'rounded-full'}
+      transition:name={photo[0].src.replace(/\W/g, '')}
     />
   </Link>
 </article>

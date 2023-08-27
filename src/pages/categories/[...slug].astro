@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import Header from '../../components/Header.astro'
+import Layout from '../../layouts/Layout.astro'
+import Heading from '../../components/UI/Heading.astro'
+import Breadcrumb from '../../components/UI/Breadcrumb.astro'
+
+export async function getStaticPaths() {
+  const categories = await getCollection('categories')
+  return categories.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry }
+  }))
+}
+
+interface Props {
+  entry: CollectionEntry<'categories'>
+}
+
+const { entry } = Astro.props
+const { slug } = Astro.params
+
+const transition_name_hero = (slug! + 'hero_transition').replace(/\W/g, '')
+---
+
+<Layout title={slug || 'CPDM'}>
+  <Header />
+  <main class='max-w-7xl mx-auto'>
+    <div class='flex w-full justify-center'>
+      <Breadcrumb>{entry.data.name}</Breadcrumb>
+    </div>
+
+    <article
+      class='bg-cover bg-no-repeat bg-center col-span-4 lg:col-span-2 2xl:col-span-1 h-[400px] justify-start items-end flex rounded-xl'
+      style={`background-image: url(${entry.data.hero.src})`}
+      transition:name={transition_name_hero}
+    >
+      <div
+        class='bg-gradient-to-b from-expresso-500 via-transparent to-expresso-500 bg-blend-multiply w-full h-full'
+      >
+        <div
+          class='bg-gradient-to-r from-expresso-500 via-transparent to-expresso-500 bg-blend-multiply w-full h-full justify-center items-center flex flex-col gap-y-4'
+        >
+          <Heading size='h2' classes='text-white'>
+            {entry.data.name}
+          </Heading>
+        </div>
+      </div>
+    </article>
+  </main>
+</Layout>
