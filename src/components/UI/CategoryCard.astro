@@ -13,12 +13,9 @@ const categories = await getCollection('categories')
   >
     <Image
       class='object-cover object-center w-full h-full rounded-xl'
-      alt={'sheesh'}
-      transition:persist={(categories[0].slug! + 'hero_transition').replace(
-        /\W/g,
-        ''
-      )}
+      alt={`${categories[0].slug}-img`}
       src={categories[0].data.hero}
+      width={1080}
     />
     <a
       href={categories[0].collection + '/' + categories[0].slug}
@@ -38,12 +35,9 @@ const categories = await getCollection('categories')
   >
     <Image
       class='object-cover object-center w-full h-full rounded-xl'
-      alt={'sheesh'}
-      transition:persist={(categories[2].slug! + 'hero_transition').replace(
-        /\W/g,
-        ''
-      )}
+      alt={`${categories[2].slug}-img`}
       src={categories[2].data.hero}
+      width={1080}
     />
     <a
       href={categories[2].collection + '/' + categories[2].slug}
@@ -57,17 +51,12 @@ const categories = await getCollection('categories')
       </div>
     </a>
   </article>
-  <article
-    class='col-span-4 lg:col-span-2 2xl:col-span-1 h-[400px] flex rounded-xl relative'
-  >
+  <article class='col-span-4 2xl:col-span-1 h-[400px] flex rounded-xl relative'>
     <Image
       class='object-cover object-center w-full h-full rounded-xl'
-      alt={'sheesh'}
-      transition:persist={(categories[1].slug! + 'hero_transition').replace(
-        /\W/g,
-        ''
-      )}
+      alt={`${categories[1].slug}-img`}
       src={categories[1].data.hero}
+      width={1080}
     />
     <a
       href={categories[1].collection + '/' + categories[1].slug}

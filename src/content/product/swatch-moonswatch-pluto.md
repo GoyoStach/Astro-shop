@@ -7,4 +7,8 @@ photo :
 - "../../assets/accessories/swatch-moonswatch-pluto/moonswatch1.png"
 - "../../assets/accessories/swatch-moonswatch-pluto/moonswatch2.png"
 - "../../assets/accessories/swatch-moonswatch-pluto/moonswatch3.png"
+- "../../assets/accessories/swatch-moonswatch-pluto/moonswatch3.png"
+  
+categories: 
+- watch
 ---

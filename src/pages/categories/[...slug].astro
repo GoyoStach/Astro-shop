@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, getEntry } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
 import { Image, getImage } from 'astro:assets'
 import Header from '../../components/Header.astro'
@@ -22,12 +22,14 @@ interface Props {
 const { entry } = Astro.props
 const { slug } = Astro.params
 
-const transition_name_hero = (slug! + 'hero_transition').replace(/\W/g, '')
+const allWatchs = await getCollection('product', ({ data }) => {
+  return data.categories.find((e) => e.slug === slug)
+})
 ---
 
 <Layout title={entry.data.name || 'CPDM'}>
   <Header />
-  <main class='max-w-7xl mx-auto'>
+  <main class='max-w-7xl mx-auto' transition:animate='slide'>
     <div class='flex w-full justify-center'>
       <Breadcrumb>{entry.data.name}</Breadcrumb>
     </div>
@@ -37,9 +39,9 @@ const transition_name_hero = (slug! + 'hero_transition').replace(/\W/g, '')
     >
       <Image
         class='object-cover object-center w-full h-full rounded-xl'
-        alt={'sheesh'}
-        transition:persist={transition_name_hero}
+        alt={`${slug}-img`}
         src={entry.data.hero}
+        width={1920}
       />
       <div
         class='bg-gradient-to-b from-expresso-500 via-transparent to-expresso-500 bg-blend-multiply w-full h-full absolute'
@@ -53,5 +55,19 @@ const transition_name_hero = (slug! + 'hero_transition').replace(/\W/g, '')
         </div>
       </div>
     </article>
+    <section class='w-full grid grid-cols-4 gap-4 p-4'>
+      {
+        allWatchs.map((watch) => (
+          <div class='relative w-full h-[30vh] flex col-span-4 lg:col-span-2 2xl:col-span-1'>
+            <Image
+              class='object-cover object-center w-full h-full rounded-xl '
+              alt={`${watch.slug}-img`}
+              src={watch.data.photo[0]}
+              width={1000}
+            />
+          </div>
+        ))
+      }
+    </section>
   </main>
 </Layout>

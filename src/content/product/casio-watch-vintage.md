@@ -7,4 +7,7 @@ photo :
 - "../../assets/accessories/casio-watch-vintage/casio2.png"
 - "../../assets/accessories/casio-watch-vintage/casio1.png"
 - "../../assets/accessories/casio-watch-vintage/casio3.png"
+- "../../assets/accessories/casio-watch-vintage/casio3.png"
+categories: 
+- watch
 ---

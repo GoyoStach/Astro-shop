@@ -9,5 +9,6 @@ photo:
 - "../../assets/accessories/orient-worldmap/orient1.webp"
 - "../../assets/accessories/orient-worldmap/orient3.webp"
 - "../../assets/accessories/orient-worldmap/orient4.webp"
-
+categories: 
+- watch 
 ---
