@@ -1,0 +1,81 @@
+---
+import { CollectionEntry, getCollection, getEntry } from 'astro:content'
+import { Image, getImage } from 'astro:assets'
+import Header from '../../../components/Header.astro'
+import Breadcrumb from '../../../components/UI/Breadcrumb.astro'
+import Heading from '../../../components/UI/Heading.astro'
+import Layout from '../../../layouts/Layout.astro'
+import ImageCarousel from '../../../components/UI/ImageCarousel.astro'
+
+export async function getStaticPaths() {
+  const categories = await getCollection('watch')
+  return categories.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry }
+  }))
+}
+
+interface Props {
+  entry: CollectionEntry<'watch'>
+}
+
+const { entry } = Astro.props
+const { slug } = Astro.params
+const { Content } = await entry.render()
+
+const productRaw = await getEntry(entry.data.product)
+const product = productRaw.data
+
+const breadCrumbString = productRaw.slug
+
+console.log(breadCrumbString)
+---
+
+<Layout title={product.name || 'CPDM'}>
+  <Header />
+  <main class='max-w-7xl mx-auto' transition:animate='slide'>
+    <div class='flex w-full justify-center'>
+      <Breadcrumb
+        path={[`categories/${breadCrumbString.split('/')[0]}`, entry.slug]}
+      />
+    </div>
+
+    <article
+      class='col-span-4 lg:col-span-2 2xl:col-span-1 h-[400px] flex rounded-xl relative'
+    >
+      <Image
+        class='object-cover object-center w-full h-full rounded-xl'
+        alt={`${slug}-img`}
+        src={product.thumbnail}
+        width={1920}
+        quality={'low'}
+      />
+      <div
+        class='bg-gradient-to-b from-expresso-500 via-transparent to-expresso-500 bg-blend-multiply w-full h-full absolute'
+      >
+        <div
+          class='bg-gradient-to-r from-expresso-500 via-transparent to-expresso-500 bg-blend-multiply w-full h-full justify-center items-center flex flex-col gap-y-4'
+        >
+          <Heading size='h2' classes='text-white text-center'>
+            {product.name}
+          </Heading>
+          <Heading size='h6' classes='text-white text-center '>
+            {product.brand}
+          </Heading>
+        </div>
+      </div>
+    </article>
+
+    <section
+      class='w-full grid grid-cols-4 gap-4 p-4 bg-gradient-to-b from-expresso-500 via-expresso-400 to-expresso-500'
+    >
+      <div class='h-fit col-span-4 w-full sm:col-span-2 sm:sticky top-20'>
+        <ImageCarousel imageArray={entry.data.photo} />
+      </div>
+      <div class='col-span-4 w-full sm:col-span-2'>
+        <Content />
+      </div>
+    </section>
+    <section class='col-span-4 h-[3000px] bg-red-500'></section>
+  </main>
+</Layout>

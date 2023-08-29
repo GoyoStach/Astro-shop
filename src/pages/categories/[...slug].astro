@@ -6,6 +6,8 @@ import Header from '../../components/Header.astro'
 import Layout from '../../layouts/Layout.astro'
 import Heading from '../../components/UI/Heading.astro'
 import Breadcrumb from '../../components/UI/Breadcrumb.astro'
+import { convertNumberToEur } from '../../helpers/convertCurrencyToEuro'
+import Divider from '../../components/UI/Divider.astro'
 
 export async function getStaticPaths() {
   const categories = await getCollection('categories')
@@ -22,16 +24,17 @@ interface Props {
 const { entry } = Astro.props
 const { slug } = Astro.params
 
-const allWatchs = await getCollection('product', ({ data }) => {
+const temp = await getCollection('product', ({ data }) => {
   return data.categories.find((e) => e.slug === slug)
 })
+const products = [...temp, ...temp, ...temp]
 ---
 
 <Layout title={entry.data.name || 'CPDM'}>
   <Header />
   <main class='max-w-7xl mx-auto' transition:animate='slide'>
     <div class='flex w-full justify-center'>
-      <Breadcrumb>{entry.data.name}</Breadcrumb>
+      <Breadcrumb path={['categories/' + entry.slug]} />
     </div>
 
     <article
@@ -55,17 +58,36 @@ const allWatchs = await getCollection('product', ({ data }) => {
         </div>
       </div>
     </article>
-    <section class='w-full grid grid-cols-4 gap-4 p-4'>
+    <section
+      class='w-full grid grid-cols-4 gap-4 p-4 bg-gradient-to-b from-expresso-500 via-expresso-400 to-expresso-500'
+    >
       {
-        allWatchs.map((watch) => (
-          <div class='relative w-full h-[30vh] flex col-span-4 lg:col-span-2 2xl:col-span-1'>
+        products.map((product) => (
+          <a
+            class='relative w-full flex col-span-4 sm:col-span-2 xl:col-span-1 flex-col rounded-2xl hover:opacity-80 transition-opacity '
+            href={'/categories/' + product.slug}
+          >
             <Image
-              class='object-cover object-center w-full h-full rounded-xl '
-              alt={`${watch.slug}-img`}
-              src={watch.data.photo[0]}
+              class='object-cover object-center w-full rounded-xl h-[30vh]'
+              alt={`${product.slug}-img`}
+              src={product.data.thumbnail}
               width={1000}
             />
-          </div>
+            <div>
+              <Divider />
+            </div>
+            <div class='pt-2 pl-1 text-white h-[10vh] overflow-hidden flex flex-col '>
+              <Heading
+                size={'h4'}
+                classes='whitespace-nowrap text-ellipsis overflow-hidden'
+              >
+                {product.data.name}
+              </Heading>
+              <p class='text-xl sm:text-2xl md:text-4xl '>
+                From {convertNumberToEur(product.data.price)}
+              </p>
+            </div>
+          </a>
         ))
       }
     </section>

@@ -1,9 +1,25 @@
 ---
+//TODO : Make dynamic with props and map dunction for nested links
 import { IoChevronForward } from 'react-icons/io5/index.js'
+
+interface Props {
+  path: string[]
+}
+
+const { path } = Astro.props
 ---
 
 <div class='my-4 flex items-center gap-1'>
-  <a href='/' class='underline underline-offset-2'>Index</a>
-  <IoChevronForward className='opacity-50' />
-  <span class='text-expresso-100 font-silkScreen font-bold'><slot /></span>
+  <a href='/' class='underline underline-offset-2 text-expresso-100/50'>Index</a
+  >
+  {
+    path.map((e) => (
+      <>
+        <IoChevronForward className='opacity-50' />
+        <a class='text-expresso-100 font-silkScreen font-bold' href={'/' + e}>
+          {e}
+        </a>
+      </>
+    ))
+  }
 </div>
