@@ -1,43 +1,37 @@
 ---
 import { CollectionEntry, getCollection, getEntry } from 'astro:content'
 import { Image, getImage } from 'astro:assets'
-import Header from '../../../components/Header.astro'
-import Breadcrumb from '../../../components/UI/Breadcrumb.astro'
-import Heading from '../../../components/UI/Heading.astro'
-import Layout from '../../../layouts/Layout.astro'
-import ImageCarousel from '../../../components/UI/ImageCarousel.astro'
+import Header from '../../components/Header.astro'
+import Breadcrumb from '../../components/UI/Breadcrumb.astro'
+import Heading from '../../components/UI/Heading.astro'
+import Layout from '../../layouts/Layout.astro'
+import ImageCarousel from '../../components/UI/ImageCarousel.astro'
 
 export async function getStaticPaths() {
-  const categories = await getCollection('watch')
+  const categories = await getCollection('product')
   return categories.map((entry) => ({
-    params: { slug: entry.slug },
+    params: {
+      categories: entry.slug.split('/')[0],
+      mySlug: entry.slug.split('/')[1]
+    },
     props: { entry }
   }))
 }
 
 interface Props {
-  entry: CollectionEntry<'watch'>
+  entry: CollectionEntry<'product'>
 }
 
 const { entry } = Astro.props
-const { slug } = Astro.params
+const { slug, categories } = Astro.params
 const { Content } = await entry.render()
-
-const productRaw = await getEntry(entry.data.product)
-const product = productRaw.data
-
-const breadCrumbString = productRaw.slug
-
-console.log(breadCrumbString)
 ---
 
-<Layout title={product.name || 'CPDM'}>
+<Layout title={entry.data.name || 'CPDM'}>
   <Header />
   <main class='max-w-7xl mx-auto' transition:animate='slide'>
     <div class='flex w-full justify-center'>
-      <Breadcrumb
-        path={[`categories/${breadCrumbString.split('/')[0]}`, entry.slug]}
-      />
+      <Breadcrumb path={[categories!, entry.slug]} />
     </div>
 
     <article
@@ -46,7 +40,7 @@ console.log(breadCrumbString)
       <Image
         class='object-cover object-center w-full h-full rounded-xl'
         alt={`${slug}-img`}
-        src={product.thumbnail}
+        src={entry.data.thumbnail}
         width={1920}
         quality={'low'}
       />
@@ -57,10 +51,10 @@ console.log(breadCrumbString)
           class='bg-gradient-to-r from-expresso-500 via-transparent to-expresso-500 bg-blend-multiply w-full h-full justify-center items-center flex flex-col gap-y-4'
         >
           <Heading size='h2' classes='text-white text-center'>
-            {product.name}
+            {entry.data.name}
           </Heading>
           <Heading size='h6' classes='text-white text-center '>
-            {product.brand}
+            {entry.data.brand}
           </Heading>
         </div>
       </div>

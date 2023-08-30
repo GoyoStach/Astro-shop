@@ -2,12 +2,12 @@
 import { getCollection, getEntry } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
 import { Image, getImage } from 'astro:assets'
-import Header from '../../components/Header.astro'
-import Layout from '../../layouts/Layout.astro'
-import Heading from '../../components/UI/Heading.astro'
-import Breadcrumb from '../../components/UI/Breadcrumb.astro'
-import { convertNumberToEur } from '../../helpers/convertCurrencyToEuro'
-import Divider from '../../components/UI/Divider.astro'
+import Header from '../components/Header.astro'
+import Layout from '../layouts/Layout.astro'
+import Heading from '../components/UI/Heading.astro'
+import Breadcrumb from '../components/UI/Breadcrumb.astro'
+import { convertNumberToEur } from '../helpers/convertCurrencyToEuro'
+import Divider from '../components/UI/Divider.astro'
 
 export async function getStaticPaths() {
   const categories = await getCollection('categories')
@@ -25,7 +25,7 @@ const { entry } = Astro.props
 const { slug } = Astro.params
 
 const temp = await getCollection('product', ({ data }) => {
-  return data.categories.find((e) => e.slug === slug)
+  return data.categories.slug === slug
 })
 const products = [...temp, ...temp, ...temp]
 ---
@@ -34,7 +34,7 @@ const products = [...temp, ...temp, ...temp]
   <Header />
   <main class='max-w-7xl mx-auto' transition:animate='slide'>
     <div class='flex w-full justify-center'>
-      <Breadcrumb path={['categories/' + entry.slug]} />
+      <Breadcrumb path={[entry.slug]} />
     </div>
 
     <article
@@ -65,7 +65,7 @@ const products = [...temp, ...temp, ...temp]
         products.map((product) => (
           <a
             class='relative w-full flex col-span-4 sm:col-span-2 xl:col-span-1 flex-col rounded-2xl hover:opacity-80 transition-opacity '
-            href={'/categories/' + product.slug}
+            href={product.slug}
           >
             <Image
               class='object-cover object-center w-full rounded-xl h-[30vh]'

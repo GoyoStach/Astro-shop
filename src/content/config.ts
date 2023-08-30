@@ -8,8 +8,10 @@ const product = defineCollection({
       name: z.string(),
       brand: z.string(),
       price: z.number(),
-      categories: z.array(reference("categories")),
-      thumbnail: image()
+      categories: reference("categories"),
+      thumbnail: image(),
+      description: z.string(),
+      photo : z.array(image()),
   }) 
 });
 
@@ -24,20 +26,9 @@ const categories = defineCollection({
 })
 
 
-const watch = defineCollection({
-  type:'content',
-  schema:({image})=>
-    z.object({
-      description: z.string(),
-      photo : z.array(image()),
-      product: reference("product"),
-    })
-
-})
 // 3. Export a single `collections` object to register your collection(s)
 //    This key should match your collection directory name in "src/content"
 export const collections = {
   'product': product,
   'categories': categories,
-  'watch': watch
 };

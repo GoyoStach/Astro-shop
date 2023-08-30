@@ -13,7 +13,7 @@ const { path } = Astro.props
   <a href='/' class='underline underline-offset-2 text-expresso-100/50'>Index</a
   >
   {
-    path.map((e) => (
+    path.map((e, i, arr) => (
       <>
         <IoChevronForward className='opacity-50' />
         <a class='text-expresso-100 font-silkScreen font-bold' href={'/' + e}>

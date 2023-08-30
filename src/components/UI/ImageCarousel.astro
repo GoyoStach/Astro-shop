@@ -6,8 +6,6 @@ interface Props {
 }
 
 const { imageArray } = Astro.props
-
-const imgArr2 = [...imageArray, ...imageArray]
 ---
 
 <div class='flex flex-col justify-start'>
@@ -18,7 +16,7 @@ const imgArr2 = [...imageArray, ...imageArray]
   />
   <div class='grid grid-cols-4 gap-4 py-4'>
     {
-      imgArr2.map((e, i) => (
+      imageArray.map((e, i) => (
         <Image
           id={`img-id-${i}`}
           src={e}
