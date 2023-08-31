@@ -30,12 +30,17 @@ const { imageArray } = Astro.props
 </div>
 
 <script>
-  const buttons = document.querySelectorAll('img.on-click')
-  const mainImg = document.querySelector('img.main-img')
+  const temp = () => {
+    const buttons = document.querySelectorAll('img.on-click')
+    const mainImg = document.querySelector('img.main-img')
 
-  buttons.forEach((img) => {
-    img.addEventListener('click', () => {
-      mainImg?.setAttribute('src', img.getAttribute('src')!)
+    buttons.forEach((img) => {
+      img.addEventListener('click', () => {
+        console.log('clicked')
+        mainImg?.setAttribute('src', img.getAttribute('src')!)
+      })
     })
-  })
+  }
+  temp()
+  document.addEventListener('astro:after-swap', () => temp())
 </script>
